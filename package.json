@@ -1,0 +1,17 @@
+{
+  "name": "xbox-now-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/biomayak/xbox-now-bot",
+  "author": "biomayak",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "mongodb": "^6.3.0",
+    "telegraf": "^4.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
