@@ -5,6 +5,8 @@ const adminHandler = require('./handlers/adminHandler');
 const ownerHandler = require('./handlers/ownerHandler');
 const databaseService = require('./services/databaseService');
 
+console.log('Starting bot...');
+
 async function runBot() {
   try {
     // Initialize database connection
