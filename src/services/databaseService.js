@@ -60,7 +60,7 @@ async function isUserInCollection(userId) {
 
 // Function to get a user by ID from the database
 async function getUserById(userId) {
-  return await usersCollection.findOne({ userId: String(userId) });
+  return await usersCollection.findOne({ userId: parseInt(userId) });
 }
 
 // Function to get a user by username from the database
@@ -71,11 +71,19 @@ async function getUserByUsername(username) {
 // Admin caching
 
 let adminCache = [];
+let ownerCache;
 // Function to initialize the admin user IDs from the database
 async function initAdminCache() {
   try {
     const adminUsers = await usersCollection.find({ role: { $in: ['admin', 'owner'] } }).toArray();
     adminCache = adminUsers.map((adminUser) => adminUser.userId);
+    console.log('Admin cache initialized: ', adminCache);
+    for (let admin of adminUsers) {
+      if (admin.role === 'owner') {
+        ownerCache = admin.userId;
+        console.log(`Owner cache initialized: ${ownerCache}`);
+      } else { continue; }
+    }
   } catch (error) {
     console.error('Error initializing admin cache: ', error);
     return false;
@@ -105,7 +113,7 @@ async function initTextsCache() {
       textsCache[text.section] = text.text;
     });
 
-    console.log('Texts cache initialized:', textsCache);
+    console.log('Texts cache initialized');
   } catch (error) {
     console.error('Error initializing texts cache: ', error);
   }
@@ -122,12 +130,16 @@ async function setTextsCollection(section, text) {
 }
 
 async function getTextsCollection(section) {
-  console.log(textsCache[section]);
   if (!textsCache[section]) {
     console.log(`No text for section ${section} found`);
-    return null;
+    return `Текст для данного раздела ещё не добавлен. Используйте команду "/changeText ${section} [текст]" для добавления текста.`;
   }
   return textsCache[section];
+}
+
+async function getOwnerCache() {
+  console.log(`owner cache: ${ownerCache}`);
+  return ownerCache;
 }
 
 // Getter function for usersCollection
@@ -154,4 +166,5 @@ module.exports = {
   initTextsCache,
   setTextsCollection,
   getTextsCollection,
+  getOwnerCache
 };

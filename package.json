@@ -6,6 +6,11 @@
   "author": "biomayak",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "setup": "./setup.sh",
+    "start": "node src/bot.js",
+    "dev": "nodemon src/bot.js"
+  },
   "dependencies": {
     "dotenv": "^16.3.1",
     "mongodb": "^6.3.0",

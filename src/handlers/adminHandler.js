@@ -60,6 +60,7 @@ async function sendMessageHandler(ctx) {
 
   // Extract section and text from the message
   let [command, receiver, ...textArray] = ctx.message.text.split(' ');
+  if (!receiver || !textArray) { return; }
   const text = textArray.join(' ');
   const isUsername = [...receiver][0] === '@';
 
@@ -122,13 +123,37 @@ async function changeTextHandler(ctx) {
   return ctx.reply(`Текст для раздела '${section}' обновлён.`);
 }
 
+async function listSectionsHandler (ctx) {
+  // Check if the user is an admin
+  const userId = ctx.from.id;
+  const isAdmin = await helperFunctions.isAdminUser(userId);
 
+  if (!isAdmin) {
+    return ctx.reply('Недостаточно прав.');
+  }
 
-// Add more handler functions as needed
+  return ctx.reply(
+    'Меню - "start"\n' +
+    '\nИгры - "games"' +
+    '\n\tИгры для Xbox Series X|S и Xbox One - "gamesXbox"' +
+    '\n\tИгры для PC - "gamesPC"' +
+    '\n\tОбратно совместимые игры Xbox и Xbox 360 - "gamesXbox360"\n' +
+    '\nПодписки - "subscriptions"' +
+    '\n\tПодписки для Xbox Series X|S и Xbox One - "subscriptionsXbox"' +
+    '\n\tПодписки для PC - "subscriptionsPC"\n' +
+    '\nВнутриигровая валюта - "currencies"' +
+    '\n\tВнутриигровая валюта для Xbox Series X|S и Xbox One - "currenciesXbox"' +
+    '\n\tВнутриигровая валюта для PC - "currenciesPC"\n' +
+    '\nСкидки - "sales"' +
+    '\n\tСкидки для Xbox Series X|S и Xbox One - "salesXbox"' +
+    '\n\tСкидки для PC - "salesPC"'
+  )
+}
 
 module.exports = {
   listAdminsHandler,
   broadcastHandler,
   sendMessageHandler,
-  changeTextHandler
+  changeTextHandler,
+  listSectionsHandler
 };

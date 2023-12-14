@@ -13,6 +13,7 @@ async function sendMessageToUser(ctx, userId, message) {
   
 // Function to check if a user is an admin
 async function isAdminUser(userId) {
+  console.log (`Checking if user ${userId} is an admin`);
   return getAdminCache().includes(userId);
 }
   

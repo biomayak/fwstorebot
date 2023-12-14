@@ -1,20 +1,23 @@
+const backToStartButton = {text: "⬅", callback_data: "start"};
 const startReplyMarkup = {
     reply_markup: {
         inline_keyboard: [
-            /* Inline buttons. 2 side-by-side */
             [ { text: "Инструкции", callback_data: "instructions" }],
 
-            /* One button */
             [ { text: "Игры", callback_data: "games" } ],
+
+            [ { text: "Подписки", callback_data: "subscriptions" }],
+
+            [ { text: "Внутриигровая валюта",  callback_data: "currencies"}],
             
-            /* Also, we can have URL buttons. */
+            [ { text: "Скидки", callback_data: "sales"}],
+            
             [ { text: "Отзывы", url: "https://vk.com/topic-78122258_47627829?offset=1300" } ]
         ]
     }
 };
 
-const backToStartButton = {text: "⬅", callback_data: "start"};
-const otherReplyMarkup = {
+const instructionsReplyMarkup = {
     reply_markup: {
         inline_keyboard: [
             [ backToStartButton ]
@@ -22,8 +25,105 @@ const otherReplyMarkup = {
     }
 };
 
+const gamesReplyMarkup = {
+    reply_markup: {
+        inline_keyboard: [
+            [ { text: "Игры для Xbox Series X|S и Xbox One", callback_data: "gamesXbox" }],
+
+            [ { text: "Игры для PC", callback_data: "gamesPC" } ],
+
+            [ { text: "Обратно совместимые игры Xbox и Xbox 360", callback_data: "gamesXbox360" } ],
+            
+            [ backToStartButton ]
+        ]
+    }
+};
+
+const subscriptionsReplyMarkup = {
+    reply_markup: {
+        inline_keyboard: [
+            [ { text: "Подписки для Xbox Series X|S и Xbox One", callback_data: "subscriptionsXbox" }],
+
+            [ { text: "Подписки для PC", callback_data: "subscriptionsPC" } ],
+            
+            [ backToStartButton ]
+        ]
+    }
+};
+
+const currenciesReplyMarkup = {
+    reply_markup: {
+        inline_keyboard: [
+            [ { text: "Внутриигровая валюта для Xbox Series X|S и Xbox One", callback_data: "currenciesXbox" }],
+
+            [ { text: "Внутриигровая валюта для PC", callback_data: "currenciesPC" } ],
+            
+            [ backToStartButton ]
+        ]
+    }
+};
+
+const salesReplyMarkup = {
+    reply_markup: {
+        inline_keyboard: [
+            [ { text: "Скидки для Xbox Series X|S и Xbox One", callback_data: "salesXbox" }],
+
+            [ { text: "Скидки для PC", callback_data: "salesPC" } ],
+            
+            [ backToStartButton ]
+        ]
+    }
+};
+
+
+const backToGamesButton = {text: "⬅", callback_data: "games"};
+const backToGamesReplyMarkup = {
+    reply_markup: {
+        inline_keyboard: [
+            [ backToGamesButton ]
+        ]
+    }
+};
+
+const backToSubscriptionsButton = {text: "⬅", callback_data: "subscriptions"};
+const backToSubscriptionsReplyMarkup = {
+    reply_markup: {
+        inline_keyboard: [
+            [ backToSubscriptionsButton ]
+        ]
+    }
+};
+
+const backToCurrenciesButton = {text: "⬅", callback_data: "currencies"};
+const backToCurrenciesReplyMarkup = {
+    reply_markup: {
+        inline_keyboard: [
+            [ backToCurrenciesButton ]
+        ]
+    }
+};
+
+const backToSalesButton = {text: "⬅", callback_data: "sales"};
+const backToSalesReplyMarkup = {
+    reply_markup: {
+        inline_keyboard: [
+            [ backToSalesButton ]
+        ]
+    }
+};
+
 
 module.exports = {
     startReplyMarkup,
-    otherReplyMarkup
+    
+    instructionsReplyMarkup,
+    gamesReplyMarkup,
+    subscriptionsReplyMarkup,
+    currenciesReplyMarkup,
+    salesReplyMarkup,
+
+    backToGamesReplyMarkup,
+    backToSubscriptionsReplyMarkup,
+    backToCurrenciesReplyMarkup,
+    backToSalesReplyMarkup
 };

@@ -2,7 +2,7 @@ const helperFunctions = require('../utils/helperFunctions');
 const databaseService = require('../services/databaseService');
 
 async function transferOwnershipHandler(ctx) {
-    const newOwnerUsername = ctx.message.text.split(' ')[1];
+    const newOwnerUsername = ctx.message.text.split(' ')[1].substring(1);
   
     if (!newOwnerUsername) {
       ctx.reply('Укажите юзернейм.');
@@ -11,6 +11,7 @@ async function transferOwnershipHandler(ctx) {
   
     // Check if the current user is the owner
     const currentUser = await databaseService.getUserById(ctx.from.id);
+    console.log(currentUser);
     if (currentUser && currentUser.role === 'owner') {
       // Find the new owner by username
       const newOwner = await databaseService.getUserByUsername(newOwnerUsername);
@@ -36,7 +37,7 @@ async function transferOwnershipHandler(ctx) {
 }
 
 async function setAdminHandler(ctx) {
-    const adminUsername = ctx.message.text.split(' ')[1];
+    const adminUsername = ctx.message.text.split(' ')[1].substring(1);
   
     // Check if the current user is the owner
     const currentUser = await databaseService.getUserById(ctx.from.id);
@@ -57,7 +58,7 @@ async function setAdminHandler(ctx) {
 }
   
 async function disbandAdminHandler(ctx) {
-    const adminUsername = ctx.message.text.split(' ')[1];
+    const adminUsername = ctx.message.text.split(' ')[1].substring(1);
   
     // Check if the current user is the owner
     const currentUser = await databaseService.getUserById(ctx.from.id);
