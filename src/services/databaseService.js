@@ -25,6 +25,7 @@ async function addUserToDatabase(userId, username, role="user") {
 
 
 async function connectToDatabase() {
+  
   try {
     await mongoClient.connect();
     console.log('Connected to MongoDB');

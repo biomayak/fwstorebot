@@ -10,6 +10,7 @@ console.log('Starting bot...');
 async function runBot() {
   try {
     // Initialize database connection
+    console.log('Starting database connection...');
     await databaseService.connectToDatabase();
 
     // Initialize admin and texts cache after the database connection is established
