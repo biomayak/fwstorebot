@@ -2,9 +2,9 @@ const backToStartButton = {text: "⬅", callback_data: "start"};
 const startReplyMarkup = {
     reply_markup: {
         inline_keyboard: [
-            [ { text: "Инструкции", callback_data: "instructions" }],
+            [ { text: "Активация кода", callback_data: "instructions" }],
 
-            [ { text: "Игры", callback_data: "games" } ],
+            [ { text: "Игры & DLC", callback_data: "games" } ],
 
             [ { text: "Подписки", callback_data: "subscriptions" }],
 
@@ -28,11 +28,11 @@ const instructionsReplyMarkup = {
 const gamesReplyMarkup = {
     reply_markup: {
         inline_keyboard: [
-            [ { text: "Игры для Xbox Series X|S и Xbox One", callback_data: "gamesXbox" }],
+            [ { text: "Игры & DLC для Xbox Series X|S и Xbox One", callback_data: "gamesXbox" }],
 
-            [ { text: "Игры для PC", callback_data: "gamesPC" } ],
+            [ { text: "Игры & DLC для PC", callback_data: "gamesPC" } ],
 
-            [ { text: "Обратно совместимые игры Xbox и Xbox 360", callback_data: "gamesXbox360" } ],
+            [ { text: "Обратно совместимые игры & DLC", callback_data: "gamesXbox360" } ],
             
             [ backToStartButton ]
         ]

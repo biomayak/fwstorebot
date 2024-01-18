@@ -107,7 +107,6 @@ let textsCache = {};
 
 async function initTextsCache() {
   try {
-    // Assuming you have a 'texts' collection in your database
     const texts = await textsCollection.find().toArray();
 
     texts.forEach((text) => {
