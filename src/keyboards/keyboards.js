@@ -2,13 +2,13 @@ const backToStartButton = {text: "⬅", callback_data: "start"};
 const startReplyMarkup = {
     reply_markup: {
         inline_keyboard: [
-            [ { text: "Активация кода", callback_data: "instructions" }],
-
             [ { text: "Игры & DLC", callback_data: "games" } ],
 
             [ { text: "Подписки", callback_data: "subscriptions" }],
 
             [ { text: "Внутриигровая валюта",  callback_data: "currencies"}],
+
+            [ { text: "Активация кода", callback_data: "instructions" }],
             
             [ { text: "Скидки", callback_data: "sales"}],
             
