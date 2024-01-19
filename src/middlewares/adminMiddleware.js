@@ -7,7 +7,7 @@ async function forwardMessagesToAdmins(ctx, next) {
   // Check if the message is from a regular user
   if (!await helperFunctions.isAdminUser(ctx.from.id) && ctx.message) {
     getAdminCache().forEach(async (adminUserId) => {
-      await ctx.telegram.forwardMessage(adminUserId, ctx.chat.id, ctx.message.message_id);
+      await helperFunctions.sendMessageToUser(ctx, adminUserId, `Отправитель: ${ctx.from.id}\n${ctx.message.text}`, ctx.message.message_id);
     });
   }
 
