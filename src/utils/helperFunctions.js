@@ -7,6 +7,10 @@ async function sendMessageToUser(ctx, userId, message) {
       await ctx.telegram.sendMessage(userId, message);
       console.log(`Message sent to user ${userId}`);
     } catch (error) {
+      if (error.response.error_code === 403) {
+        console.log("Cannot send message to user ${userId}.");
+        return 0;
+      }
       console.error(`Error sending message to user ${userId}:`, error);
     }
   }
