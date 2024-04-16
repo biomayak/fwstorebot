@@ -30,11 +30,13 @@ async function runBot() {
     bot.command('disbandAdmin', ownerHandler.disbandAdminHandler);
 
     // Admin handlers
+    bot.on('photo', adminHandler.adminPhotoHadler);
     bot.command('listSections', adminHandler.listSectionsHandler);
     bot.command('listAdmins', adminHandler.listAdminsHandler);
     bot.command('broadcast', adminHandler.broadcastHandler);
     bot.command('sendMessage', adminHandler.sendMessageHandler);
     bot.command('changeText', adminHandler.changeTextHandler);
+
 
     // User handlers
     bot.command('help', userHandler.helpHandler);

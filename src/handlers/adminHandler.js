@@ -150,10 +150,61 @@ async function listSectionsHandler (ctx) {
   )
 }
 
+async function adminPhotoHadler(ctx) {
+  // Check if the user is an admin
+  const userId = ctx.from.id;
+  const isAdmin = await helperFunctions.isAdminUser(userId);
+
+  if (!isAdmin) { return; }
+
+  const photoFileId = ctx.message.photo[ctx.message.photo.length - 1].file_id;
+  const messageCaption = ctx.message.caption ? ctx.message.caption : '';
+
+  // Extract command, reciever and text from the message
+  let [command, receiver, ...captionArray] = messageCaption.split(' ');
+  if (!receiver) { return; }
+  const caption = captionArray.join(' ');
+  const isUsername = [...receiver][0] === '@';
+
+  
+
+  if (command === '/sendMessage') {
+    try {
+      if (isUsername) {
+        receiver = receiver.substring(1);
+        const receiverUser = await getUsersCollection().findOne({ username: receiver });
+        console.log(receiverUser);
+        if (!receiverUser) {
+          ctx.reply(`Пользователь @${receiver} не найден.`);
+          return;
+        }
+        helperFunctions.sendPhotoToUser(ctx, receiverUser.userId, photoFileId, caption);
+        console.log(`sendMessage: Message sent to ${receiverUser.userId}`);
+      } else {
+        const userExists = await isUserInCollection(receiver);
+        console.log(userExists);
+        if (!userExists) {
+          ctx.reply(`Пользователь ${receiver} не найден.`);
+          return;
+        }
+
+        helperFunctions.sendPhotoToUser(ctx, receiver, photoFileId, caption);
+        console.log(`sendMessage: Message sent to ${receiver}`);
+      }
+    } catch (err) {
+      console.error(`sendMessage: ${err}`);
+      ctx.reply(err.text || 'Произошла ошибка при отправке сообщения.');
+    }
+  } else {
+    ctx.reply('Незивестная команда.');
+  }
+}
+
 module.exports = {
   listAdminsHandler,
   broadcastHandler,
   sendMessageHandler,
   changeTextHandler,
-  listSectionsHandler
+  listSectionsHandler,
+  adminPhotoHadler
 };
