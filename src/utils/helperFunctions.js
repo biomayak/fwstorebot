@@ -7,7 +7,7 @@ async function sendMessageToUser(ctx, userId, text) {
     await ctx.telegram.sendMessage(userId, text);
     console.log(`Message sent to user ${userId}`);
   } catch (error) {
-    if (error??response??error_code === 403) {
+    if ((error??response??error_code > 399) && (error??response??error_code < 500)) {
       console.log(`Cannot send message to user ${userId}.`);
       return 0;
     }
@@ -24,7 +24,6 @@ async function sendPhotoToUser(ctx, userId, photoFileId, caption) {
   } catch (error) {
     if ((error??response??error_code > 399) && (error??response??error_code < 500)) {
       console.log(`Cannot send photo to user ${userId}.`);
-      ctx.reply('Ошибка при отправке фото.');
       return;
     }
     console.error(`Error sending photo to user ${userId}:`, error);

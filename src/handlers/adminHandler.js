@@ -14,7 +14,7 @@ async function listAdminsHandler(ctx) {
 // Broadcast command handler
 async function broadcastHandler(ctx) {
 
-  if (!await helperFunctions.isAdminUser(ctx.from.id)) { return null; };
+  if (!await helperFunctions.isAdminUser(ctx.from.id)) { return; };
 
   try {
 
@@ -160,15 +160,14 @@ async function adminPhotoHadler(ctx) {
   const photoFileId = ctx.message.photo[ctx.message.photo.length - 1].file_id;
   const messageCaption = ctx.message.caption ? ctx.message.caption : '';
 
-  // Extract command, reciever and text from the message
-  let [command, receiver, ...captionArray] = messageCaption.split(' ');
-  if (!receiver) { return; }
-  const caption = captionArray.join(' ');
-  const isUsername = [...receiver][0] === '@';
-
-  
+  // Extract command and body from the message
+  let [command, ...commandBodyArray] = messageCaption.split(' ')
 
   if (command === '/sendMessage') {
+    [receiver, ...captionArray] = commandBodyArray;
+    if (!receiver) { return; }
+    const caption = captionArray.join(' ');
+    const isUsername = [...receiver][0] === '@';
     try {
       if (isUsername) {
         receiver = receiver.substring(1);
@@ -195,9 +194,38 @@ async function adminPhotoHadler(ctx) {
       console.error(`sendMessage: ${err}`);
       ctx.reply(err.text || 'Произошла ошибка при отправке сообщения.');
     }
+  } else if (command === '/broadcast') {
+    caption = commandBodyArray.join(' ');
+    try {
+      // Fetch all users
+      const users = await getUsersCollection().find({}).toArray();
+      
+      // Counter to track processed 
+      let processed = 0;
+      
+      // Send message sequentially 
+      const promises = users.map(user => {
+        return helperFunctions.sendPhotoToUser(ctx, user.userId, photoFileId, caption)
+          .then(() => {
+            processed++;
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      })
+      
+      await Promise.all(promises);
+  
+      // Reply back with confirmation
+      ctx.reply(`Объявление доставлено ${processed} чатам.`);
+  
+    } catch(err) {
+      console.log(err);
+    }
   } else {
     ctx.reply('Незивестная команда.');
   }
+
 }
 
 module.exports = {
