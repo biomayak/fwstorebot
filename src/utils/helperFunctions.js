@@ -39,5 +39,5 @@ async function isAdminUser(userId) {
 module.exports = {
     sendMessageToUser,
     sendPhotoToUser,
-w    isAdminUser
+    isAdminUser
 };
