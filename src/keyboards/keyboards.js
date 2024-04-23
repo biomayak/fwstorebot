@@ -12,7 +12,7 @@ const startReplyMarkup = {
             
             [ { text: "Скидки", callback_data: "sales"}],
             
-            [ { text: "Отзывы", url: "https://vk.com/topic-78122258_47627829?offset=1300" } ]
+            [ { text: "Отзывы", url: "https://vk.com/topic-78122258_47627829?offset=last" } ]
         ]
     }
 };
